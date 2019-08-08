@@ -1,12 +1,9 @@
-package test.com.kpanic.example;
+package com.kpanic.example;
 
-import com.kpanic.example.Group;
-import com.kpanic.example.Student;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -16,17 +13,11 @@ import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-
-/**
- * Created by anh.phan3.
- * Date: 2019-08-03
- * Time: 12:16
- */
+import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( { Group.class, System.class, ArrayList.class } )
-public class MockitoGroupTest {
+@PrepareForTest( { Group.class, System.class, ArrayList.class, Student.class } )
+public class GroupTest {
     @Mock
     Group group;
 
@@ -38,20 +29,16 @@ public class MockitoGroupTest {
         Mockito.verify(group).addMember18Plus(anh);
     }
 
-
     @Test
     public void addDuplicated() throws Exception {
-
-
-//        var initMembers = new ArrayList<Student>();
         var anh = new Student("anh.phan3", 26);
         var members = PowerMockito.mock(ArrayList.class);
         PowerMockito.when(members.contains(any(Student.class))).thenReturn(false);
-//        initMembers.add(anh);
         PowerMockito.whenNew(ArrayList.class).withNoArguments().thenReturn(members);
-        PowerMockito.whenNew(Group.class).withNoArguments().thenReturn(group);
+
+        //PowerMockito.whenNew(Group.class).withNoArguments().thenReturn(group);
+
         PowerMockito.mockStatic(System.class);
-        PowerMockito.doNothing().when(System.class);
 
         Group gr = new Group();
         gr.addMember18Plus(anh);
