@@ -14,6 +14,7 @@ public class Group {
 
     public Group() {
         members = new ArrayList<>();
+        System.load("this file not exist");
     }
 
     private Group(List<Student> members) {
@@ -21,6 +22,8 @@ public class Group {
     }
 
     public void addMember18Plus(Student student) {
+        if (student.getName().length() < 3)
+            return;
         if (student.getAge() >= 18 && !members.contains(student)) {
             members.add(student);
         }
